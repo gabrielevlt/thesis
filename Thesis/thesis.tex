@@ -1,19 +1,22 @@
-%%This is a very basic article template.
-%%There is just one section and two subsections.
-\documentclass{article}
+\documentclass[a4paper]{article}
+
+\usepackage[swapnames, nowrite]{frontespizio}
 
 \begin{document}
 
-
-\section{Title}
-
-\subsection{Subtitle}
-
-Plain text.
-
-\subsection{Another subtitle}
-
-More plain text.
-
+\begin{frontespizio}
+\Universita{Milano}
+\Dipartimento{Informatica (Crema)}
+\Corso[Laurea]{Informatica}
+%\Logo{./imgs/minerva.jpeg}
+\Titolo{Titolo}
+\Sottotitolo{Sottotitolo}
+\Punteggiatura{}
+\NCandidato{Tesi di Laurea di}
+\Candidato[810897]{Gabriele VAILATI}
+\NRelatore{Relatrice}{Relatrici}
+\Relatore{Prof. Valentina CIRIANI}
+\Annoaccademico{2014/2015}
+\end{frontespizio}
 
 \end{document}
