@@ -1,22 +1,66 @@
-\documentclass[a4paper]{article}
+% RECTO-VERSO: twoside
+% DIMENSIONE FONT: 12pt
+\documentclass[a4paper, 11pt, twoside]{article}
 
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage[inner=3.5cm, outer=2.5cm]{geometry}
 \usepackage[swapnames, nowrite]{frontespizio}
+
+\usepackage{graphicx, blindtext, fancyhdr}
+
+% NOME SEZIONE HEADER VERSO INTERNO
+\fancyhead[ER, OL]{\leftmark}
+% NUMERAZIONE PAGINA FOOTER VERSO ESTERNO
+\fancyfoot[EL, OR]{\thepage}
+% ELIMINA NUMERAZIONE PAGINA FOOTER CENTRO 
+\fancyfoot[EC, OC]{}
+
+% INTERLINEA (SINGOLA, MAX 1.5): 1
+\linespread{1}
 
 \begin{document}
 
-\begin{frontespizio}
-\Universita{Milano}
-\Dipartimento{Informatica (Crema)}
-\Corso[Laurea]{Informatica}
-%\Logo{./imgs/minerva.jpeg}
-\Titolo{Titolo}
-\Sottotitolo{Sottotitolo}
-\Punteggiatura{}
-\NCandidato{Tesi di Laurea di}
-\Candidato[810897]{Gabriele VAILATI}
-\NRelatore{Relatrice}{Relatrici}
-\Relatore{Prof. Valentina CIRIANI}
-\Annoaccademico{2014/2015}
-\end{frontespizio}
+% \begin{frontespizio}
+% \Universita{Milano}
+% \Dipartimento{Informatica (Crema)}
+% \Corso[Laurea]{Informatica}
+% %\Logo{./imgs/minerva.jpeg}
+% \Titolo{Titolo}
+% \Sottotitolo{Sottotitolo}
+% \Punteggiatura{}
+% \NCandidato{Tesi di Laurea di}
+% \Candidato[810897]{Gabriele VAILATI}
+% \NRelatore{Relatrice}{Relatrici}
+% \Relatore{Prof. Valentina CIRIANI}
+% \Annoaccademico{2014/2015}
+% \end{frontespizio}
+
+\pagenumbering{gobble}
+
+\input{./sections/dedica.tex}
+
+\cleardoublepage\null
+\tableofcontents
+
+\cleardoublepage\null
+\pagenumbering{arabic}
+\input{./sections/astratto.tex}
+\cleardoublepage\null
+\pagestyle{fancy}
+\input{./sections/introduzione.tex}
+
+\input{./sections/problema.tex}
+
+\input{./sections/soluzione.tex}
+
+\input{./sections/valutazione.tex}
+
+\input{./sections/conclusione.tex}
+
+\appendix
+\input{./sections/appendice.tex}
 
 \end{document}
