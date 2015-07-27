@@ -9,7 +9,7 @@
 \usepackage[inner=3.5cm, outer=2.5cm]{geometry}
 \usepackage[swapnames, nowrite]{frontespizio}
 
-\usepackage{graphicx, blindtext, fancyhdr}
+\usepackage{graphicx, blindtext, fancyhdr, natbib}
 
 % NOME SEZIONE HEADER VERSO INTERNO
 \fancyhead[ER, OL]{\leftmark}
@@ -62,5 +62,10 @@
 
 \appendix
 \input{./sections/appendice.tex}
+\cite{ahu61}
+
+\newpage
+\bibliography{./sections/bibliografia}
+\bibliographystyle{plain}
 
 \end{document}
