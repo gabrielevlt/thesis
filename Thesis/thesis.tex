@@ -1,6 +1,6 @@
 % RECTO-VERSO: twoside
 % DIMENSIONE FONT: 12pt
-\documentclass[a4paper, 11pt, twoside]{article}
+\documentclass[a4paper, 12pt, twoside]{article}
 
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
@@ -8,8 +8,15 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[inner=3.5cm, outer=2.5cm]{geometry}
 \usepackage[swapnames, nowrite]{frontespizio}
+\usepackage[hidelinks]{hyperref}
 
-\usepackage{graphicx, blindtext, fancyhdr, natbib}
+\usepackage{graphicx, fancyhdr, multibib, url, graphicx}
+\graphicspath{{./imgs/}}
+\newcites{site}{Riferimenti sitografici}
+
+% MOSTRARE OGNI SEC, SUB, SUBSUB, PAR 
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 
 % NOME SEZIONE HEADER VERSO INTERNO
 \fancyhead[ER, OL]{\leftmark}
@@ -44,6 +51,8 @@
 
 \cleardoublepage\null
 \tableofcontents
+\listoffigures	
+\listoftables
 
 \cleardoublepage\null
 \pagenumbering{arabic}
@@ -62,10 +71,20 @@
 
 \appendix
 \input{./sections/appendice.tex}
-\cite{ahu61}
+bla bla bla
+\citesite{jswing}
+bla bla bla
+\cite{jbeginning}
+bla bla bla
+\citesite{xmlcompletereference}
+bla bla bla
+\citesite{sito}
 
 \newpage
-\bibliography{./sections/bibliografia}
 \bibliographystyle{plain}
+\bibliography{./sections/bibliografia}
 
+\renewcommand{\refname}{Riferimenti sitografici}
+\bibliographystylesite{plain}
+\bibliographysite{./sections/bibliografia}
 \end{document}

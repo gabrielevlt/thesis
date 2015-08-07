@@ -1,9 +1,68 @@
-\section{soluzione al problema}
+\section{Soluzione proposta}
+\label{sec:soluzione}
 
-\subsection{modellazione}
+\subsection{Architettura del sistema}
+\subsubsection{Stack software}
+\subsubsection{Comunicazione intermodulo}
+\subsubsection{Hardware utilizzato}
 
-\subsection{modello matematico formale}
+\subsection{Modellazione del sistema}
+\subsubsection{Funzionalità e casi d'uso}
 
-\subsection{progettazione}
+\subsection{Organizzazione dei dati}
+\subsubsection{DBMS}
+\paragraph{Progettazione concettuale}
+\paragraph{Progettazione logica}
+\paragraph{Progettazione fisica}
+\paragraph{Adattamento e realizzazione}
+\subsubsection{Dati semistrutturati per i modelli di estrazione}
+\paragraph{Tecnologia XML}
+\paragraph{XML Schema Definition e validazione}
+\paragraph{Manipolazione e interrogazione dei dati}
 
-\subsection{soluzioni/tecnologie alternative}
+\subsection{Progettazione del sistema}
+\subsubsection{Comportamento del software}
+
+\subsection{Implementazione reale}
+\subsubsection{Moduli software}
+\paragraph{Driver}
+\paragraph{Middleware}
+\paragraph{Applicativo e GUI}
+\subsubsection{Limiti fisici e operativi}
+
+\subsection{Dislocamento}
+\subsubsection{Installazione}
+\subsubsection{Configurazione}
+\subsubsection{Avvio del servizio}
+\subsubsection{Discriminazione dell'hardware}
+
+\subsection{Rilevamento e risoluzione degli errori}
+\subsubsection{Logging degli eventi}
+I moduli di questo sistema software dispongono di meccanismi di notifica degli
+eventi che si occupano di registrare le principali operazioni effettuate e di
+avvertire l'attore al verificarsi di problemi che ne potrebbero impedire il
+normale funzionamento.
+
+Il \textit{Log} implementato utilizza la classe \texttt{Logger} del package
+\textit{java.util.logging} \cite{jianlog} che oltre a fornire il servizio
+permette anche di definirne la \textit{severità}, scegliendo
+una tra le costanti messe a disposizione dalla classe \texttt{Level}. Si riportano
+\cite{jdoclevel} i livelli \texttt{INFO} per indicare eventi generici di
+interesse che non presuppongono un errore, \texttt{WARNING} da usare in caso si verifichino
+situazioni che si separano dal normale flusso di esecuzione e necessitano di
+essere gestite, \texttt{SEVERE} per problemi gravi che potrebbero impedire il
+normale funzionamento, \texttt{OFF} che disabilita totalmente i messaggi di log
+e \texttt{ALL} per affermare che ogni evento deve essere registrato
+indipendentemente dal suo livello.
+
+Data un'istanza di \texttt{Logger} definita o recuperata con il metodo statico
+\texttt{getLogger()} saranno processati solo i messaggi il cui livello di
+severità è maggiore o uguale a quello definito per l'istanza stessa con il
+metodo \texttt{setLevel()}.
+
+Severità e testo del messaggio dunque sono parametri da indicare per ogni
+\texttt{LogRecord}; per presentarlo si ha a disposizione il metodo
+\texttt{log()} oppure uno tra \texttt{info()}, \texttt{warning()},
+\texttt{severe()}: in questo caso non è necessario indicare il livello di
+severità.
+\subsubsection{Aggregatore}
