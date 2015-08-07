@@ -12,8 +12,196 @@
 \subsection{Organizzazione dei dati}
 \subsubsection{DBMS}
 \paragraph{Progettazione concettuale}
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{modelloER}
+\caption{}
+\label{}
+\end{figure}
+\begin{table}[h!]
+\centering
+\begin{tabular}{| l | p{3cm} | p{3cm} | p{3cm} |}
+\hline Entità & Descrizione & Attributi & Identificatore\\
+\hline Machine & Macchina nella linea di produzione & mid, name, description, parts\_hour & mid\\
+\hline Feeder & Alimentatore della macchina & fid, name, description & fid\\
+\hline Box & Scatolone di componenti riversato nell'alimentatore & bid, supplier, item, batch, date, package, amount & bid\\
+\hline Batch & Lotto di produzione & id, name, description, date & id\\
+\hline
+\end{tabular}
+\label{tab:erentity}
+\caption[Documentazione ER: entità]{Documentazione schema concettuale. Tabella delle entità}
+\end{table}
+\paragraph{Machine}
+\begin{description}
+\item[mid] codice identificativo univoco della macchina
+\item[name] nome assegnato alla macchine
+\item[description] nome/descrizione della macchina
+\item[parts\_hour] stima della produzione oraria assumendo che ogni ciclo sia positivo e quindi non ci siano scarti
+\end{description}
+
+\paragraph{Feeder}
+\begin{description}
+\item[fid] codice identificativo univoco dell'alimentatore
+\item[name] nome dell'alimentatore
+\item[description] descrizione della macchina
+\end{description}
+
+\paragraph{Box}
+\begin{description}
+\item[bid] codice identificativo univoco dello scatolone
+\item[supplier] fornitore del componente
+\item[item] identificativo del componente
+\item[batch] lotto di produzione del componente
+\item[date] data di produzione del componente
+\item[package] collo dello scatolone
+\item[amount] numero di componenti in uno scatolone
+\end{description}
+
+\paragraph{Batch}
+\begin{description}
+\item[id] codice identificativo univoco del lotto di produzione
+\item[nome] nome assegnato al lotto di produzione
+\item[description] descrizione del lotto di produzione
+\item[date] data del lotto di produzione
+\end{description}
+
+\begin{table}
+\begin{tabular}{| l | p{3cm} | p{3cm} | p{3cm} |}
+\hline Relazione & Descrizione & Entità coinvolte & Attributi\\
+\hline Composizione & Associa un alimentatore alla sua macchina & Machine, Feeder & \\
+\hline Alimentazione & Associa lo scatolone caricato al suo alimentatore per produrre il lotto& Feeder, Box, Batch & date\\
+\hline Produzione & Associa alla macchina il lotto di produzione & Machine, Batch & \\
+\hline
+\end{tabular}
+\label{tab:errelationship}
+\caption[Documentazione ER: relazioni]{Documentazione schema concettuale. Tabella delle relazioni}
+\end{table}
+\paragraph{Alimentazione}
+\begin{description}
+\item[date] timestamp (data/ora) del carico componenti nell'alimentatore
+\end{description}
+
 \paragraph{Progettazione logica}
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{modelloREL}
+\caption{}
+\label{}
+\end{figure}
+
+\paragraph{Relational model}
+\hfill
+
+MACHINE(\underline{mid}, name, description, parts\_hour)
+
+FEEDER(\underline{fid}, \textit{machine}, name, description)
+
+LOAD(\underline{lid}, \textit{feeder}, \textit{box}, \textit{batch}, date)
+
+BOX(\underline{bid}, supplier, item, batch, date, package, amount)
+
+BATCH(\underline{id}, \textit{machine}, name, description, date)
+
 \paragraph{Progettazione fisica}
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline Attributo & Tipo & Vincoli\\
+  \hline mid & serial & primary key \\
+  \hline name & varchar(32) & \\
+  \hline description & varchar(256) & \\
+  \hline parts\_hour & integer & \\
+  \hline
+\end{tabular}
+\label{tab:machinetable}
+\caption[Documentazione ER: relazioni]{Progettazione fisica. Tabella Machine.}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline Attributo & Tipo & Vincoli\\
+  \hline n\_machine & smallint & not null \\
+  \hline description & varchar(80) & default \lq\rq\\
+  \hline usr\_desc1 & varchar(80) & default \lq\rq\\
+  \hline usr\_desc2 & varchar(80) & default \lq\rq\\
+  \hline teo\_parts\_hour & integer & \\
+  \hline
+\end{tabular}
+\label{tab:machinetableimpl}
+\caption[Documentazione ER: relazioni]{Progettazione fisica. Tabella Machine implementata (Machine\_desc).}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline Attributo & Tipo & Vincoli\\
+  \hline id & serial & primary key \\
+  \hline name & varchar(32) & \\
+  \hline machine & integer & not null, references machine.mid \\
+  \hline description & varchar(256) & \\
+  \hline date & timestamp & not null, default now()\\
+  \hline
+\end{tabular}
+\label{tab:batchtable}
+\caption[Documentazione ER: relazioni]{Progettazione fisica. Tabella Batch.}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline Attributo & Tipo & Vincoli\\
+  \hline id\_batch & serial & not null \\
+  \hline n\_machine & smallint & not null \\
+  \hline batch & varchar(50) & not null, default \lq\rq\\
+  \hline description1 & varchar(80) & default \lq\rq\\
+  \hline description2 & varchar(80) & default \lq\rq\\
+  \hline description3 & varchar(80) & default \lq\rq\\
+  \hline
+\end{tabular}
+\label{tab:batchtableimpl}
+\caption[Documentazione ER: relazioni]{Progettazione fisica. Tabella Batch implementata (Batch).}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline Attributo & Tipo & Vincoli\\
+  \hline fid & varchar(16) & primary key \\
+  \hline machine & \textit{integer} (smallint) & not null, \textit{references
+  machine.mid}\\
+  \hline name & varchar(32) & \\
+  \hline description & varchar(256) & \\
+  \hline
+\end{tabular}
+\label{tab:feedertable}
+\caption[Documentazione ER: relazioni]{Progettazione fisica. Tabella Feeder.}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline Attributo & Tipo & Vincoli\\
+  \hline bid & varchar(128) & primary key \\
+  \hline supplier & varchar(16) & \\
+  \hline item & varchar(16) & \\
+  \hline batch & varchar(16) & \\
+  \hline date & timestamp & \\
+  \hline package & varchar(16) & \\
+  \hline amount & integer & \\
+  \hline
+\end{tabular}
+\label{tab:boxtable}
+\caption[Documentazione ER: relazioni]{Progettazione fisica. Tabella Box.}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline Attributo & Tipo & Vincoli\\
+  \hline lid & serial & primary key \\
+  \hline feeder & varchar(16) & not null, references feeder.feeder\_id\\
+  \hline box & varchar(128) & not null, references box.bid, on delete cascade\\
+  \hline batch & integer & not null, \textit{references batch.id}\\
+  \hline date & timestamp & not null, default now()\\
+  \hline
+\end{tabular}
+\label{tab:loadtable}
+\caption[Documentazione ER: relazioni]{Progettazione fisica. Tabella Load.}
+\end{table}
 \paragraph{Adattamento e realizzazione}
 \subsubsection{Dati semistrutturati per i modelli di estrazione}
 \paragraph{Tecnologia XML}
