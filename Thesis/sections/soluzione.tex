@@ -36,33 +36,59 @@
 \subsubsection{Avvio del servizio}
 \subsubsection{Discriminazione dell'hardware}
 
+\newpage
 \subsection{Rilevamento e risoluzione degli errori}
 \subsubsection{Logging degli eventi}
 I moduli di questo sistema software dispongono di meccanismi di notifica degli
 eventi che si occupano di registrare le principali operazioni effettuate e di
-avvertire l'attore al verificarsi di problemi che ne potrebbero impedire il
+avvertire l'utente al verificarsi di problemi che ne potrebbero impedire il
 normale funzionamento.
 
-Il \textit{Log} implementato utilizza la classe \texttt{Logger} del package
-\textit{java.util.logging} \cite{jianlog} che oltre a fornire il servizio
-permette anche di definirne la \textit{severità}, scegliendo
-una tra le costanti messe a disposizione dalla classe \texttt{Level}. Si riportano
-\cite{jdoclevel} i livelli \texttt{INFO} per indicare eventi generici di
-interesse che non presuppongono un errore, \texttt{WARNING} da usare in caso si verifichino
-situazioni che si separano dal normale flusso di esecuzione e necessitano di
-essere gestite, \texttt{SEVERE} per problemi gravi che potrebbero impedire il
-normale funzionamento, \texttt{OFF} che disabilita totalmente i messaggi di log
-e \texttt{ALL} per affermare che ogni evento deve essere registrato
-indipendentemente dal suo livello.
+Il \textit{Log} implementato utilizza, ad eccezione di \textit{Driver}, la
+classe \texttt{Logger} del package \textit{java.util.logging} \cite{jianlog} che
+oltre a fornire il servizio di logging permette anche di definirne la
+\textit{severità}, scegliendo una tra le costanti messe a disposizione dalla
+classe \texttt{Level}. Si riportano \citesite{jdoclevel} i livelli \texttt{INFO}
+per indicare eventi generici di interesse che non presuppongono un errore,
+\texttt{WARNING} da usare in caso si verifichino situazioni che si separano dal
+normale flusso di esecuzione e necessitano di essere gestite, \texttt{SEVERE}
+per gravi problemi che potrebbero ostacolare il normale funzionamento,
+\texttt{OFF} che disabilita totalmente i messaggi di log e \texttt{ALL} per
+consentire ad ogni evento di essere registrato indipendentemente dal suo livello.
 
 Data un'istanza di \texttt{Logger} definita o recuperata con il metodo statico
-\texttt{getLogger()} saranno processati solo i messaggi il cui livello di
+\texttt{getLogger()} sono processati solo i messaggi il cui livello di
 severità è maggiore o uguale a quello definito per l'istanza stessa con il
 metodo \texttt{setLevel()}.
 
 Severità e testo del messaggio dunque sono parametri da indicare per ogni
-\texttt{LogRecord}; per presentarlo si ha a disposizione il metodo
-\texttt{log()} oppure uno tra \texttt{info()}, \texttt{warning()},
-\texttt{severe()}: in questo caso non è necessario indicare il livello di
-severità.
+\texttt{LogRecord} quando di registra un evento con il metodo \texttt{log()};
+i metodi alternativi \texttt{info()}, \texttt{warning()}, \texttt{severe()} non
+necessitano del livello di severità.
+
+\vspace{5mm}
+
+Il servizio di logging per il modulo \textit{Driver} è implementato con la
+procedura \texttt{logger()} definita come in listato \ref{lst:loggerdef} e
+invocata dai thread in esecuzione per stampare i messaggi sul canale
+\textit{stdin}.
+
+\vspace{5mm}
+
+\lstinputlisting[caption={Definizione procedura logger().},
+label={lst:loggerdef}]{./code/logger.c}
+
+Diversamente dal package di Java, il linguaggio C non dispone dei livelli di
+severità. Questa caratteristica è simulata con la variabile globale
+\texttt{tolog} inizializzata dal processo padre e acceduta in lettura dai thread
+figli così da condizionare il comportamento della procedura. I valori possibili
+per \texttt{tolog} sono: \texttt{0} per disattivare il servizio di log,
+\texttt{1} per attivarlo.
+
+\vspace{5mm}
+ 
+Il logging degli eventi è inattivo di default tutti i moduli. La sua attivazione
+richiede di specificare l'opzione \texttt{-d} al momento dell'esecuzione del software.
 \subsubsection{Aggregatore}
+bla
+\newpage

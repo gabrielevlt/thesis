@@ -10,7 +10,7 @@
 \usepackage[swapnames, nowrite]{frontespizio}
 \usepackage[hidelinks]{hyperref}
 
-\usepackage{graphicx, fancyhdr, multibib, url, graphicx}
+\usepackage{graphicx, fancyhdr, multibib, url, graphicx, listings, color}
 \graphicspath{{./imgs/}}
 \newcites{site}{Riferimenti sitografici}
 
@@ -24,6 +24,29 @@
 \fancyfoot[EL, OR]{\thepage}
 % ELIMINA NUMERAZIONE PAGINA FOOTER CENTRO 
 \fancyfoot[EC, OC]{}
+
+% DEFINIZIONE COLORE CUSTOM
+\definecolor{background}{rgb}{0.95, 0.95, 0.95}
+
+% FORMATTAZIONE LISTATI
+\lstset{
+language=C,
+frame=none,
+backgroundcolor=\color{background},
+basicstyle=\footnotesize\ttfamily\color{black},
+keywordstyle=\ttfamily,
+commentstyle=\ttfamily,
+tabsize=3,
+numbers=left,
+numbersep=5pt,
+numberstyle=\ttfamily\color{black},
+stepnumber=1,
+showtabs=false,
+showspaces=false
+showstringspaces=false,
+extendedchars=true,
+captionpos=b	
+}
 
 % INTERLINEA (SINGOLA, MAX 1.5): 1
 \linespread{1}
